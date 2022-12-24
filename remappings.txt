@@ -1,0 +1,4 @@
+forge-std/=lib/forge-std/src/
+foundry-random=lib/foundry-random/src/
+solidity-bytes-utils=lib/solidity-bytes-utils/contracts
+src/=src/
