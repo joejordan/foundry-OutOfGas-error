@@ -15,6 +15,14 @@ import { NFT } from "src/NFT.sol";
 /// 1) start up anvil
 /// 2) Execute following script:
 /// forge script script/HedgeNFT.s.sol:HedgeNFTScript --rpc-url "http://127.0.0.1:8545" --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast --slow -vvv
+///
+/// @dev you can tweak the maxSupply and SEED_CHUNK_SIZE vars in 
+/// NFT.sol to adust how quickly we hit an EVM OutOfGas error.
+///
+/// per my experiments, maxSupply = 5000 and SEED_CHUNK_SIZE = 250 works!;
+/// maxSupply = 5000 and SEED_CHUNK_SIZE = 500 gets most of the way through but errors
+/// maxSupply = 5000 and SEED_CHUNK_SIZE = 1000 gets less than half way through before errors
+
 contract NFTScript is Script, FoundryRandom {
     NFT nft;
 
