@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
 
@@ -59,8 +59,7 @@ contract NFTScript is Script, FoundryRandom {
 
     /// @notice generate a random collection of seed attributes
     /// @dev NOTE: For higher numberToGenerate values, this may take a while.
-    /// @dev NOTE 2: Foundry hits gas limitations at just after 1000 seed generated. 
-    /// See pending fix: https://github.com/foundry-rs/foundry/pull/3906
+    /// @dev NOTE 2: Foundry hits gas limitations at just after 1000 seed generated.
     function generateSeed(uint256 numberToGenerate) public returns (bytes memory) {
         bytes memory seedData;
 
@@ -70,7 +69,7 @@ contract NFTScript is Script, FoundryRandom {
         }
 
         // print out the generated seedData
-        console2.logBytes(seedData);
+        // console2.logBytes(seedData);
 
         return seedData;
 
