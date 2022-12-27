@@ -8,7 +8,7 @@ contract NFT {
     mapping(uint256 => bytes) public allSeedData;
 
     // total supply of tokens to generate
-    uint256 public maxSupply = 1000;
+    uint256 public maxSupply = 5000;
 
     // size of a chunk of seed data stored in our allSeedData mapping
     uint256 public constant SEED_CHUNK_SIZE = 500;
