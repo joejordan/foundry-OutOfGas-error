@@ -3,9 +3,9 @@ pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
 
-import { FoundryRandom } from "foundry-random/FoundryRandom.sol";
+// import { FoundryRandom } from "foundry-random/FoundryRandom.sol";
 
-import { BytesLib } from "solidity-bytes-utils/BytesLib.sol";
+// import { BytesLib } from "solidity-bytes-utils/BytesLib.sol";
 
 import { NFT } from "src/NFT.sol";
 
@@ -23,7 +23,7 @@ import { NFT } from "src/NFT.sol";
 /// maxSupply = 5000 and SEED_CHUNK_SIZE = 500 gets most of the way through but errors
 /// maxSupply = 5000 and SEED_CHUNK_SIZE = 1000 gets less than half way through before errors
 
-contract NFTScript is Script, FoundryRandom {
+contract NFTScript is Script { // , FoundryRandom {
     NFT nft;
 
     function run() public {
@@ -61,7 +61,7 @@ contract NFTScript is Script, FoundryRandom {
     /// @notice generate a random collection of seed attributes
     /// @dev NOTE: For higher numberToGenerate values, this may take a while.
     /// @dev NOTE 2: Foundry hits gas limitations at just after 1000 seed generated.
-    function generateSeed(uint256 numberToGenerate) public returns (bytes memory) {
+    function generateSeed(uint256 numberToGenerate) public pure returns (bytes memory) {
         bytes memory seedData;
 
         // Generate seed collection
