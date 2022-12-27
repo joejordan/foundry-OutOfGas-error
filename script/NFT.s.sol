@@ -36,10 +36,11 @@ contract NFTScript is Script, FoundryRandom {
 
         /// @dev it does not seem to matter where we put vm.pauseGasMetering(), 
         /// attempting to seed our NFT with 5000 seed at 500 to 1000 entries at a time is always failing.
-        // vm.pauseGasMetering();
+        vm.pauseGasMetering();
 
         // calculate number of loops to hit our maxSupply
         uint256 seedChunks = nft.maxSupply() / nft.SEED_CHUNK_SIZE();
+        console2.log("SEED CHUNKS::", seedChunks);
 
         for (uint8 i = 0; i < seedChunks; i++) {
             // generate seed data
@@ -65,7 +66,8 @@ contract NFTScript is Script, FoundryRandom {
 
         // Generate seed collection
         for (uint256 i = 0; i < numberToGenerate; i++) {
-            seedData = BytesLib.concat(seedData, bytes.concat(randomBytes32()));
+            // seedData = BytesLib.concat(seedData, bytes.concat(randomBytes32()));
+            seedData = bytes.concat(seedData, bytes32(0xfc0d99e40167184a9631f233e783e033fad56524cede94e276af1bb3037aeb53));
         }
 
         // print out the generated seedData
