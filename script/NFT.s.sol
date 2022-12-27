@@ -19,40 +19,45 @@ contract NFTScript is Script, FoundryRandom {
     NFT nft;
 
     function run() public {
+        bytes memory _seedData;
 
         // deploy NFT on-chain
         vm.startBroadcast();
         nft = new NFT();
         vm.stopBroadcast();
 
-        vm.pauseGasMetering();
+        /// @dev it does not seem to matter where we put vm.pauseGasMetering(), 
+        /// attempting to seed our NFT with 5000 seed at 500 to 1000 entries at a time is always failing.
+        // vm.pauseGasMetering();
 
-        for (uint8 i = 0; i < 5; i++) {
+        // calculate number of loops to hit our maxSupply
+        uint256 seedChunks = nft.maxSupply() / nft.SEED_CHUNK_SIZE();
+
+        for (uint8 i = 0; i < seedChunks; i++) {
+            // generate seed data
+            _seedData = generateSeed(nft.SEED_CHUNK_SIZE());
+
+            // set generated seed data to chain
             vm.startBroadcast();
-            nft.setGenomeData(i, generateSeed(100));
+            nft.setSeedData(i, _seedData);
             vm.stopBroadcast();
         }
+
+        vm.startBroadcast();
+        console2.log("LAST SEED ON-CHAIN:");
+        console2.logBytes32(nft.getSeedById(nft.maxSupply() - 1));
+        vm.stopBroadcast();
     }
 
-    // function setSeedData() public {
-    //     uint256 maxSupply = nft.maxSupply();
-    //     console2.log("HEREEEE");
-    //     for (uint256 i = 0; i < maxSupply; i++) {
-    //         nft.seedNFT(i, randomBytes32());
-    //     }
-    // }
-
-    /// @notice generate a random collection of genome attributes
+    /// @notice generate a random collection of seed attributes
     /// @dev NOTE: For higher numberToGenerate values, this may take a while.
-    /// @dev NOTE 2: Foundry hits gas limitations at just after 1000 genome generated. 
+    /// @dev NOTE 2: Foundry hits gas limitations at just after 1000 seed generated. 
     /// See pending fix: https://github.com/foundry-rs/foundry/pull/3906
     function generateSeed(uint256 numberToGenerate) public returns (bytes memory) {
         bytes memory seedData;
 
-        // Generate genome collection
+        // Generate seed collection
         for (uint256 i = 0; i < numberToGenerate; i++) {
-            // seedData = abi.encode(seedData, randomBytes32());
-            // seedData = 
             seedData = BytesLib.concat(seedData, bytes.concat(randomBytes32()));
         }
 
